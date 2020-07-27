@@ -2,4 +2,16 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  if user 
+    p 現在 #{user.username}/#{user.id} でログイン中
+    a(href='/logout') ログアウト
+    div
+     a(href='schedules/new') 新しく予定を作成する
+    h3 作成したスケジュール一覧
+      ul
+        each schedule in schedules
+          li
+            a(href=`/schedules/${schedule.scheduleId}`) #{schedule.scheduleName}  /  #{schedule.updateAt}
+  else 
+    p Welcome to #{title}
+    a(href='/auth/github') ログイン

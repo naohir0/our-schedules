@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1 #{schedule.scheduleName}
+  p(style="white-space:pre;") #{schedule.memo}
+  p 作成者: #{schedule.User.username}
+  h2 出欠表
+  table 
+    tr
+      th 候補日
+      each user in users
+       th #{user.username}
+    each candidate in candidates
+      tr 
+        th #{candidate.candidateName}
+        each user in users 
+          - var avail = availMapMap.get(user.userId).get(candidate.candidateId)
+          - var availabilityLabels = ['欠', '？', '出']
+          td
+           if user.isSelf
+             button(
+               data-scheduleid=schedule.scheduleId
+               data-userid=user.userId
+               data-candidateid=candidate.candidateId
+               data-avail=avail).availbutton #{availabilityLabels[avail]} 
+           else
+             p #{availabilityLabels[avail]}
+  h2 コメント
+      each user in users
+       if user.isSelf
+         h4
+          div #{user.username}
+          div.comment-text #{commentMap.get(user.userId)}
+          div
+            button(
+              data-schedule-id=schedule.scheduleId
+              data-user-id=user.userId).comment-button コメント編集
+          hr
+       else
+         h4 #{user.username}
+         hr
+  h2
+   form(action=`/schedules/${schedule.scheduleId}/edit` method="get")
+    button(type='submit') 予定を編集
