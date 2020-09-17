@@ -2,20 +2,13 @@
 const loader = require('./sequelize-loader');
 const Sequelize = loader.Sequelize;
 
-const Schedule = loader.database.define('Schedule',{
+const Member = loader.database.define('Member',{
   scheduleId:{
     type:Sequelize.UUID,
     primaryKey:true,
     allowNull:false
   },
-  scheduleName:{
-    type:Sequelize.STRING,
-    allowNull:false
-  },
-  memo:{
-    type:Sequelize.TEXT,
-  },
-  createdBy:{
+  hostId:{
     type:Sequelize.INTEGER,
     allowNull:false
   },
@@ -23,13 +16,12 @@ const Schedule = loader.database.define('Schedule',{
     type:Sequelize.DATE,
     allowNull:false
   },
-  times:{
-    type:Sequelize.STRING,
-    allowNull:false
+  members:{
+    type:Sequelize.TEXT
   }
 },{
   freezeTableName:true,
   timestamps:false
 });
 
-module.exports = Schedule
+module.exports = Member

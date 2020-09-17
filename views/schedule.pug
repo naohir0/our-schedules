@@ -1,44 +1,60 @@
 extends layout
 
 block content
-  h1 #{schedule.scheduleName}
-  p(style="white-space:pre;") #{schedule.memo}
-  p 作成者: #{schedule.User.username}
-  h2 出欠表
-  table 
-    tr
-      th 候補日
+  h1.ly_scheduleTitle #{schedule.scheduleName}
+  div.ly_maincontent
+   div.bl_scheduleInfo
+    div.bl_scheduleInfo_items
+     span.bl_scheduleInfo_items_title 作成者　
+     span.bl_scheduleInfo_items_cont #{schedule.User.username}
+    if parseInt(requser.id) === schedule.createdBy
+     div.bl_scheduleInfo_items
+      span.bl_scheduleInfo_items_title コード番号
+      div.bl_scheduleInfo_items_cont #{schedule.scheduleId}
+    div.bl_scheduleInfo_items
+      span.bl_scheduleInfo_items_title メンバー 
+      div.bl_scheduleInfo_items_cont #{memberlist}
+    div.bl_scheduleInfo_items
+      span(style="white-space:pre;").bl_scheduleInfo_items_title 説明
+      div.bl_scheduleInfo_items_cont #{schedule.memo}
+   div.bl_attendance
+    h2.bl_attendance_title 出欠表
+    table(border="1").bl_attendance_table
+      tr.bl_attendance_table_firstLine
+        th(width="80px") 候補日
+        each user in users
+         th(width="80px") #{user.username}
+      each candidate in candidates
+        tr 
+          th #{candidate.candidateName}
+          each user in users 
+            - var avail = availMapMap.get(user.userId).get(candidate.candidateId)
+            - var availabilityLabels = ['欠', '？', '出']
+            td.bl_attendance_table_td
+             if user.isSelf
+               button(
+                 data-scheduleid=schedule.scheduleId
+                 data-userid=user.userId
+                 data-candidateid=candidate.candidateId
+                 data-avail=avail).availbutton.bl_attendance_table_td_ans.bl_attendance_table_td_ans__btn #{availabilityLabels[avail]} 
+             else
+               p.bl_attendance_table_td_ans #{availabilityLabels[avail]}
+    div.bl_schduleComment
+      h2.bl_schduleComment_title コメント
       each user in users
-       th #{user.username}
-    each candidate in candidates
-      tr 
-        th #{candidate.candidateName}
-        each user in users 
-          - var avail = availMapMap.get(user.userId).get(candidate.candidateId)
-          - var availabilityLabels = ['欠', '？', '出']
-          td
-           if user.isSelf
-             button(
-               data-scheduleid=schedule.scheduleId
-               data-userid=user.userId
-               data-candidateid=candidate.candidateId
-               data-avail=avail).availbutton #{availabilityLabels[avail]} 
-           else
-             p #{availabilityLabels[avail]}
-  h2 コメント
-      each user in users
-       if user.isSelf
-         h4
-          div #{user.username}
-          div.comment-text #{commentMap.get(user.userId)}
-          div
-            button(
-              data-schedule-id=schedule.scheduleId
-              data-user-id=user.userId).comment-button コメント編集
-          hr
-       else
-         h4 #{user.username}
-         hr
-  h2
-   form(action=`/schedules/${schedule.scheduleId}/edit` method="get")
-    button(type='submit') 予定を編集
+         if user.isSelf
+            div.bl_schduleComment_user #{user.username}　/　
+              button(
+                data-schedule-id=schedule.scheduleId
+                data-user-id=user.userId).comment-button コメントを編集
+            div.comment-text.bl_schduleComment_comment #{commentMap.get(user.userId)}
+            hr
+         else
+           h4.bl_schduleComment_user.bl_schduleComment_user__noComment #{user.username}
+           hr
+   div.bl_editSchedule
+    h2.bl_editSchedule_title 予定編集
+    p.bl_editSchedule_memo この予定を編集する場合、もしくは削除する場合は以下のボタンから行ってください
+    if parseInt(requser.id) === schedule.createdBy
+      form(action=`/schedules/${schedule.scheduleId}/edit` method="get")
+        button(type='submit').bl_editSchedule_button 予定を編集

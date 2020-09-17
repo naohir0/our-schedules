@@ -1,23 +1,32 @@
 extends layout
 
 block content
-  h3 予定の編集
-  form(method="post", action=`/schedules/${schedule.scheduleId}?edit=1`)
-    div
-      h5 予定名
-      input(type="text" name="scheduleName" value=schedule.scheduleName)
-    div
-      h5 メモ
-      textarea(name="memo") #{schedule.memo}
-    div
-      label 既存の候補日程
+  h3.ly_scheduleTitle.ly_scheduleTitle__form.ly_scheduleTitle__form__edit 予定の編集
+  div.ly_maincontent
+   div.bl_scheduleForm
+   form(method="post", action=`/schedules/${schedule.scheduleId}?edit=1`)
+    div.bl_scheduleForm_item
+      h5.bl_scheduleForm_item_subtitle.bl_scheduleForm_item_subtitle__edit 予定名
+      input(type="text" name="scheduleName" value=schedule.scheduleName).el_textform.el_textform__form
+    div.bl_scheduleForm_item
+      h5.bl_scheduleForm_item_subtitle.bl_scheduleForm_item_subtitle__edit メモ
+      textarea(name="memo").el_textarea #{schedule.memo}
+    div.bl_scheduleForm_item
+      h5.bl_scheduleForm_item_subtitle.bl_scheduleForm_item_subtitle__edit 既存の候補日程
       ul
         each candidate in candidates
           li #{candidate.candidateName}
-      p 候補日程の追加 (改行して複数入力してください)
-      textarea(name="candidates")
+      h5.bl_scheduleForm_item_subtitle.bl_scheduleForm_item_subtitle__edit 候補日程の追加 (改行して複数入力してください)
+      textarea(name="candidates").el_textarea
+    div.bl_scheduleForm_item
+      h5.bl_scheduleForm_item_subtitle.bl_scheduleForm_item_subtitle__edit 既存のメンバー
+      ul
+        each member in members
+          li #{member}
+      h5.bl_scheduleForm_item_subtitle.bl_scheduleForm_item_subtitle__edit メンバーの追加 (改行して複数入力してください)
+      textarea(name="newmembers").el_textarea
     div
-      button(type="submit") 以上の内容で予定を編集する
-  h3 危険な変更
-   form(method="post", action=`/schedules/${schedule.scheduleId}?delete=1`)
-    button(type="submit") この予定を削除する
+      button(type="submit").bl_scheduleForm_submitBtn.bl_scheduleForm_submitBtn__edit 以上の内容で予定を編集する
+  h5.bl_scheduleForm_item_subtitle.bl_scheduleForm_item_subtitle_delete 危険な変更  
+  form(method="post", action=`/schedules/${schedule.scheduleId}?delete=1`)
+     button(type="submit").el_deleteButton この予定を削除する

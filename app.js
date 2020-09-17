@@ -13,6 +13,7 @@ var Schedule = require('./models/schedule');
 var Availability = require('./models/availability');
 var Candidate = require('./models/candidate');
 var Comment = require('./models/comment');
+var Member = require('./models/member');
 
 var GITHUB_CLIENT_ID = 'f8c95ebbc6b6fa61a013';
 var GITHUB_CLIENT_SECRET = '8bd794919dcdcdd24775b01c97ab5e85b1fb1b3e';
@@ -43,6 +44,8 @@ User.sync().then(()=>{
   Schedule.sync();
   Comment.belongsTo(User,{foreignKey:'userId'});
   Comment.sync();
+  Member.belongsTo(User,{foreignKey:'hostId'});
+  Member.sync();
   Availability.belongsTo(User,{foreignKey:'userId'});
   Candidate.sync().then(()=>{
     Availability.belongsTo(Candidate,{foreignKey:'candidateId'});
@@ -59,6 +62,8 @@ var logoutRouter = require('./routes/logout');
 var scheduleRouter = require('./routes/schedules');
 var availRouter = require('./routes/availabilities');
 var commentRouter = require('./routes/comments');
+var enterRouter = require('./routes/enter');
+var memoRouter = require('./routes/topmemo');
 
 var app = express();
 
@@ -83,6 +88,8 @@ app.use('/logout', logoutRouter);
 app.use('/schedules',scheduleRouter);
 app.use('/schedules',availRouter);
 app.use('/schedules',commentRouter);
+app.use('/enters',enterRouter);
+app.use('/topmemo',memoRouter);
 
 
 app.get('/auth/github',

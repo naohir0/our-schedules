@@ -1,15 +1,27 @@
 extends layout
 
 block content
-   h1 新しく予定を作る
-   form(method='post' action='/schedules')
-    div
-     h5 予定名
-     input(type='text' name='scheduleName') 
-    div 
-     h5 メモ
-     textarea(name="memo")
-    div 
-     h5 候補日程 (改行して複数入力してください)
-     textarea(name="candidates")
-    button(type="submit") 予定作成
+    h1.ly_scheduleTitle.ly_scheduleTitle__form 新しく予定を作る
+    div.ly_maincontent
+      div.bl_scheduleForm
+      form(method='post' action='/schedules')
+       div.bl_scheduleForm_item
+        h5.bl_scheduleForm_item_subtitle 予定名
+        input(type='text' name='scheduleName').el_textform.el_textform__form
+       div.bl_scheduleForm_item
+        h5.bl_scheduleForm_item_subtitle メモ
+        textarea(name="memo").el_textarea
+       div.bl_scheduleForm_item
+        h5.bl_scheduleForm_item_subtitle 候補日程 (改行して複数入力してください)
+        textarea(name="candidates").el_textarea.el_textarea__large
+       div.bl_scheduleForm_item
+        h5.bl_scheduleForm_item_subtitle メンバー (改行して複数入力してください)
+        p 例 username/userId
+        textarea(name="members").el_textarea.el_textarea__large
+       div.bl_scheduleForm_item
+        h5.bl_scheduleForm_item_subtitle (参考）ユーザー一覧
+        ul
+         each user in users
+           li #{user.username}/#{user.userId}
+       button(type="submit").bl_scheduleForm_submitBtn 予定作成
+      

@@ -6,3 +6,558 @@ body {
 a {
   color: #00B7FF;
 }
+
+/* 要素(エレメント)のCSS */
+.el_textform {
+  font-size:1.5rem;
+  width:80%;
+  margin-left:5%;
+  transition: .2s;
+}
+.el_textform:hover {
+  box-shadow: 3px 0px 7px 0px rgb(194, 246, 255);
+  box-shadow: -3px 0px 7px 3px rgb(194, 246, 255);
+}
+.el_textform__form:hover {
+  box-shadow: 3px 3px 7px 3px rgb(182, 255, 172), -3px -3px 7px 3px rgb(182, 255, 172);
+}
+.el_button {
+  font-size:1.1rem;
+  background-color:rgb(228, 228, 228);
+  position:absolute;
+  transform:translateY(-2%);
+  display:inline-block;
+  width:10%;
+  border:3px solid transparent;
+  font-weight:700;
+  transition:.3s;
+  cursor: pointer;
+}
+.el_button:hover {
+  background-color: yellow;
+  box-shadow: 1px 1px 5px 3px gray;
+}
+.el_textarea {
+  font-size:1rem;
+  width:80%;
+  height:3em;
+  margin-left:5%;
+  transition: .2s;
+}
+.el_textarea:hover {
+  box-shadow: 3px 3px 7px 3px rgb(182, 255, 172), -3px -3px 7px 3px rgb(182, 255, 172);
+}
+.el_textarea__large {
+  height:8em;
+}
+/* メインタイトルのCSS */
+.ly_maintitle {
+  font-size:3em;
+  text-align:center;
+  margin-top:20px;
+  margin-bottom:20px;
+  background: -moz-linear-gradient(top,rgb(255, 247, 232),rgb(255, 202, 103) 30%,rgb(237, 251, 255) 80%,rgb(128, 234, 255) );
+  background: -webkit-linear-gradient(top,rgb(255, 247, 232),rgb(255, 202, 103) 30%,rgb(237, 251, 255) 80%,rgb(128, 234, 255));
+  background:linear-gradient(to bottom,rgb(255, 247, 232),rgb(255, 202, 103) 30%,rgb(237, 251, 255) 80%,rgb(128, 234, 255));
+  padding-top:60px;
+  padding-bottom:60px;
+}
+.ly_maintitle__toppage {
+  margin-bottom:60px;
+}
+/* ログインページのCSS */
+.bl_loginPage {
+  width:100%;
+  font-size:2.5em;
+  background-color: rebeccapurple;
+  padding-top:20px;
+  padding-bottom:40px;
+  display:inline-block;
+  padding-left:2em;
+  padding-right:2em;
+}
+.bl_loginPage_title {
+  color:yellow;
+}
+.bl_loginPage_link {
+  color:aqua;
+  transition:.4s;
+}
+.bl_loginPage_link:hover {
+  color:rgb(255, 208, 0);
+}
+.bl_loginPage_memo {
+  color:rgb(179, 255, 0);
+  display: inline-block;
+  padding-bottom:80px;
+  margin-top:10px;
+  font-size:.8em;
+}
+/* メインコンテンツのCSS */
+.ly_maincontent {
+  width:80%;
+  margin-left:10%;
+  font-size:1.2rem;
+  margin-top:30px;
+}
+
+  /* ユーザー情報のCSS */
+.bl_userInfo {
+  margin-bottom:30px;
+  background-color: rgb(82, 82, 82);
+  color:yellow;
+  padding-top:15px;
+  padding-bottom:15px;
+  position: relative;
+}
+.bl_userInfo_info {
+  position: absolute;
+  left:50%;
+  transform: translateX(-50%);
+}
+.bl_userInfo > a {
+  margin-left:20px;
+  transition: .3s;
+}
+.bl_userInfo_logout {
+  display: block;
+  text-align:center;
+  margin-top:10px;
+}
+.bl_userInfo_logout > a:hover {
+  color:rgb(255, 37, 255);
+}
+  /* スケジュール作成アイコンのCSS */
+.bl_createSchedule {
+  font-weight:800;
+  font-size:1.5rem;
+  width:60%;
+  text-align: center;
+  margin-left:20%;
+  margin-bottom:40px;
+  border-radius:.5em;
+}
+.bl_createSchedule > a {
+  text-decoration:none;
+  background-color: yellow;
+  color:black;
+  display:block;
+  padding-top:20px;
+  padding-bottom:20px;
+  border-radius:.5em;
+  border:4px solid transparent;
+  transition:.25s;
+}
+.bl_createSchedule > a:hover {
+  border-color:rgb(64, 184, 253);
+  color:rgb(10, 165, 255);
+}
+
+  /* スケジュールコード検索のCSS */
+.bl_schedulesIndex_note {
+  margin-left:2em;
+  font-size:.9em;
+}
+  /* スケジュール一覧のCSS */
+.bl_shcedulesList_list_item > a {
+  text-decoration: none;
+  font-size:1.3rem;
+  transition: .3s;
+}
+.bl_shcedulesList_list_item > a:hover {
+  text-decoration: underline;
+  color:rgb(0, 102, 255);
+}
+
+.bl_idMemoList_list {
+  font-size:20px;
+}
+.bl_idMemoList_del {
+  margin-top:10px;
+  margin-bottom:70px;
+}
+.bl_idMemoList_del_button {
+  width:250px;
+  cursor: pointer;
+}
+
+
+  /* メインコンテンツ　各コンテンツのCSS*/
+.bl_maincontent_items {
+  margin-top:40px;
+  
+}
+.bl_maincontent_items_subtitle {
+  padding-top:2px;
+  padding-bottom:2px;
+  padding-left:1em;
+  background-color:rgb(255, 255, 227);
+  box-shadow: 2px 6px 6px 0px gray;
+}
+
+
+
+
+/* 各スケジュールのページ*/
+  /* タイトル 予定情報のCSS */
+.ly_scheduleTitle {
+  font-size:2.5em;
+  text-indent: 2em;
+  text-align:left;
+  margin-top:20px;
+  margin-bottom:40px;
+  padding-top:40px;
+  padding-bottom:20px;
+  border-bottom:solid 3px rgb(255, 200, 255);
+  font-weight:900;
+}
+
+.bl_scheduleInfo_items {
+  padding-left:2em;
+  padding-right: 1em;
+  min-width:70%;
+  background-color: rgb(255, 236, 255);
+  padding-top:2px;
+  padding-bottom:2px;
+  margin-bottom: 20px;
+  transition: .3s;
+}
+.bl_scheduleInfo_items:hover {
+  background-color:rgb(253, 188, 253);
+}
+
+.bl_scheduleInfo_items_title {
+  font-weight:800;
+}
+.bl_scheduleInfo_items_cont {
+  margin-top:10px;
+  margin-bottom:5px;
+}
+  /* 出欠表のCSS */
+.bl_attendance_title{
+  font-size:1.3em;
+  font-weight:600;
+  margin-top:50px;
+  text-align:center;
+  border-bottom:solid 3px rgb(255, 200, 255);
+  border-top:solid 3px rgb(255, 200, 255);
+  width:140px;
+}
+.bl_attendance_table {
+  border-color: black;
+}
+.bl_attendance_table_firstLine {
+  font-size:18px;
+}
+.bl_attendance_table_td_ans {
+  font-size:20px;
+  font-weight: 800;
+  margin-left:30px;
+}
+.bl_attendance_table_td_ans__btn {
+  margin-left:22px;
+  margin-top:5px;
+  margin-bottom:5px;
+  background-color: rgb(255, 227, 255);
+  cursor: pointer;
+}
+.bl_attendance_table_td_ans__btn:hover {
+  background:-moz-radial-gradient(rgb(255, 247, 255),rgb(255, 161, 255));
+  background:-webkit-radial-gradient(rgb(255, 247, 255),rgb(255, 161, 255));
+  background:radial-gradient(rgb(255, 247, 255),rgb(255, 161, 255));
+}
+/* メモ　background-color: rgb(255, 132, 255); */
+  /* コメントのCSS */
+.bl_schduleComment_title{
+  font-size:1.3em;
+  font-weight:600;
+  margin-top:50px;
+  text-align:center;
+  border-bottom:solid 3px rgb(255, 200, 255);
+  border-top:solid 3px rgb(255, 200, 255);
+  width:140px;
+}
+.bl_schduleComment_user {
+  margin-bottom:10px;
+  font-size:20px;
+  text-indent: 1em;
+  font-weight: 500;
+  background-color: rgb(255, 247, 255);
+  padding-top:4px;
+  padding-bottom:4px;
+}
+.bl_schduleComment_user > button {
+  font-size:14px;
+  font-weight:600;
+  background-color: rgb(253, 213, 253);
+  cursor: pointer;
+  border-radius:3px;
+  transition:.4s;
+}
+.bl_schduleComment_user > button:hover {
+  background-color: rgb(255, 161, 255);
+  box-shadow: 1px 1px 5px 1px gray;
+}
+.bl_schduleComment_user__noComment {
+  margin-bottom:50px;
+}
+.bl_schduleComment_comment {
+  font-size:22px;
+  margin-left:1em;
+}
+  /* 予定編集のCSS */
+.bl_editSchedule_title {
+  font-size:1.3em;
+  font-weight:600;
+  margin-top:30px;
+  text-align:center;
+  border-bottom:solid 3px rgb(255, 200, 255);
+  border-top:solid 3px rgb(255, 200, 255);
+  width:140px;
+}
+.bl_editSchedule_memo {
+  font-size:.9em;
+}
+.bl_editSchedule_button {
+  font-size:1.5em;
+  background-color: rgb(255, 216, 255);
+  border-radius:4px;
+  width:50%;
+  margin-top:10px;
+  margin-left:2em;
+  padding-top:10px;
+  padding-bottom:10px;
+  font-weight: 600;
+  cursor:pointer;
+  transition:.4s;
+}
+.bl_editSchedule_button:hover {
+  background-color: rgb(255, 161, 255);
+  box-shadow: 1px 1px 5px 3px gray;
+}
+
+/* スケジュール作成、編集のフォーム */
+.ly_scheduleTitle__form {
+  border-bottom:3px solid rgb(29, 250, 40);
+}
+
+.bl_scheduleForm_item_subtitle {
+  font-size:1.5em;
+  background-color: rgba(162, 255, 24, 0.1);
+  padding-left:1em;
+  padding-right:.5em;
+  padding-top:5px;
+  padding-bottom:5px;
+  background: -moz-linear-gradient(top,rgb(247, 255, 234),rgb(196, 255, 140));
+  background: -webkit-linear-gradient(top,rgb(247, 255, 234),rgb(196, 255, 116));
+  background:linear-gradient(to bottom,rgb(247, 255, 234),rgb(196, 255, 116));
+}
+
+.bl_scheduleForm_submitBtn {
+  width:40%;
+  font-size:1.8em;
+  cursor: pointer;
+  margin-top:30px;
+  margin-left:30%;
+  margin-bottom:80px;
+  transition:.4s;
+  background-color: rgb(247, 255, 234);
+  border:5px rgb(227, 255, 182) solid;
+}
+
+.bl_scheduleForm_submitBtn:hover {
+  background: -moz-linear-gradient(top,rgb(247, 255, 234),rgb(183, 255, 116));
+  background: -webkit-linear-gradient(top,rgb(247, 255, 234),rgb(183, 255, 116));
+  background:linear-gradient(to bottom,rgb(247, 255, 234),rgb(183, 255, 116));
+  border-color:rgb(247, 255, 234);
+  color:rgb(0, 4, 255);
+}
+
+/* 編集ページのCSS */
+.ly_scheduleTitle__form__edit {
+  border-bottom:3px solid rgb(29, 69, 250);
+}
+
+.bl_scheduleForm_item_subtitle__edit {
+  background: -moz-linear-gradient(top,rgb(247, 255, 234),rgb(63, 98, 253));
+  background: -webkit-linear-gradient(top,rgb(247, 255, 234),rgb(63, 98, 253));
+  background:linear-gradient(to bottom,rgb(247, 255, 234),rgb(63, 98, 253));
+}
+.bl_scheduleForm_submitBtn__edit {
+  width:80%;
+  margin-left:8%;
+  margin-top:50px;
+  padding-top:10px;
+  padding-bottom: 10px;
+  font-size: 1.8em;
+  border:5px solid rgb(234, 235, 255);
+  background: -moz-linear-gradient(top,rgb(111, 109, 255),rgb(247, 255, 234));
+  background: -webkit-linear-gradient(top,rgb(111, 109, 255),rgb(247, 255, 234));
+  background:linear-gradient(to bottom,rgb(111, 109, 255),rgb(247, 255, 234));
+  transition:1s;
+}
+
+.bl_scheduleForm_submitBtn__edit:hover {
+  background: -moz-linear-gradient(top,rgb(247, 255, 234),rgb(111, 109, 255) 30%,rgb(111, 109, 255) 60%,rgb(247, 255, 234));
+  background: -webkit-linear-gradient(top,rgb(247, 255, 234),rgb(111, 109, 255) 30%,rgb(111, 109, 255) 60%,rgb(247, 255, 234));
+  background:linear-gradient(to bottom,rgb(247, 255, 234),rgb(111, 109, 255) 30%,rgb(111, 109, 255) 60%,rgb(247, 255, 234));
+  border-color:rgb(234, 235, 255);
+  color:rgb(249, 253, 0);
+  font-weight: 600;;
+}
+
+.bl_scheduleForm_item_subtitle.bl_scheduleForm_item_subtitle_delete {
+  padding-top:20px;
+  padding-bottom:20px;
+  font-size:2em;
+  background: -moz-linear-gradient(top,rgb(255, 177, 33),rgb(255, 239, 209) 40%,rgb(255, 151, 65) 80%,rgb(255, 126, 91));
+  background: -webkit-linear-gradient(top,rgb(255, 177, 33),rgb(255, 239, 209) 30%,rgb(255, 151, 65) 80%,rgb(255, 126, 91) );
+  background:linear-gradient(to bottom,rgb(255, 177, 33),rgb(255, 239, 209) 30%,rgb(255, 151, 65) 80%,rgb(255, 126, 91));
+  width:80%;
+  margin-left:10%;
+  text-indent:2em;
+}
+.el_deleteButton {
+  font-size:2em;
+  font-weight: 700;
+  padding-top:20px;
+  padding-bottom:20px;
+  margin-bottom:50px;
+  margin-left:20%;
+  background-color:orange;
+  border:4px solid orange;
+  display:inline-block;
+  transition:.3s;
+  width:60%;
+  cursor: pointer;
+}
+.el_deleteButton:hover {
+  background-color: orangered;
+  color:yellow;
+  border-color:aqua;
+}
+
+/* トップページのメディアクエリー */
+  /* ログイン情報 */
+@media screen and (max-width:975px){
+  .bl_userInfo_info {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    padding-left:1em;
+    padding-right:1em;
+  }
+}
+@media screen and (max-width:640px){
+  /* 予定作成ボタン */
+  .bl_createSchedule {
+    width:100%;
+    margin-left:0px;
+  }
+}
+@media screen and (max-width:570px){
+  /* 検索ボタン */
+  .el_button__index {
+    display:inline-block;
+    width:62px;
+  }
+}
+
+/* 各予定ページのメディアクエリ */
+@media screen and (max-width:520px){
+  .bl_editSchedule_button {
+    font-size:.8em;
+  }
+}
+
+/* 予定作成、編集フォームのメディアクエリー */
+@media screen and (max-width:620px){
+  .ly_scheduleTitle {
+    font-size:1.8em;
+  }
+  .bl_scheduleForm_item_subtitle {
+    font-size:1em;
+  }
+  .bl_scheduleForm_submitBtn {
+    font-size:1em;
+    width:80%;
+    margin-left:10%;
+  }
+}
+
+/* スマートフォンのメディアクエリー */
+@media screen and (max-width:420px){
+/* トップページ全体 */
+  .ly_maintitle {
+    font-size:2em;
+    padding-top:50px;
+    padding-bottom:50px;
+    margin-bottom:20px;
+  }
+  .bl_userInfo {
+    width:100%;
+    padding-left:1%;
+    padding-right: 1%;
+  }
+  .bl_userInfo > span {
+    font-size:.7em;
+  }
+  .bl_userInfo > a {
+    font-size:1em;
+    display:block;
+    margin-left:0px;
+    text-align: center;
+  }
+  .bl_createSchedule {
+    width:100%;
+  }
+  .bl_createSchedule > a {
+    font-size:.8em;
+  }
+  .bl_maincontent_items_subtitle {
+    width:100%;
+    font-size:1em;
+  }
+  /* スケジュール一覧 */
+  .bl_shcedulesList_list_item {
+    margin-bottom: 10px;
+  }
+  .bl_shcedulesList_list_item > a {
+    font-size:.8em;
+  }
+  /* スケジュールIDメモ一覧 */
+  .bl_idMemoList_list {
+    font-size:.8em;
+  }
+  .bl_idMemoList_del_button {
+    width: 200px;
+  }
+/* フォーム全体 */
+  .ly_scheduleTitle {
+    text-indent:1em;
+  }
+  .el_textform {
+    font-size: 1rem;
+    width: 100%;
+  }
+  .el_textarea {
+    font-size: .8rem;
+    width: 100%;
+    height: 4rem;
+  }
+  .bl_scheduleForm_item_subtitle {
+    width:100%;
+  }
+  .bl_scheduleForm_submitBtn {
+    width:80%;
+    margin-left: 15%;
+  }
+  /* 編集ページのメディアクエリー */
+  .bl_scheduleForm_item_subtitle.bl_scheduleForm_item_subtitle_delete {
+    width:80%;
+    text-indent:0em;
+  }
+  .el_deleteButton {
+    font-size:1em;
+  }
+}

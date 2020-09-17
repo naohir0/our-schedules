@@ -8,23 +8,34 @@ const Schedule = require('../models/schedule');
 const Candidate = require('../models/candidate');
 const Availability = require('../models/availability');
 const Comment = require('../models/comment');
+const Member = require('../models/member');
+require('date-utils');
 
 router.get('/new',authensure,(req,res,next)=>{
-    res.render('new',{
-      user:req.user
+    User.findAll({
+      order:[
+        ['username','ASC']
+      ]
+    }).then((users)=>{
+      res.render('new',{
+        user:req.user,
+        users:users
+      })
     })
 });
 
 router.post('/',authensure,(req,res,next)=>{
     const scheduleId = uuid.v4();
     const updateAt = new Date();
+    const times = updateAt.toFormat("YYYY年MM月DD日 HH24時MI分SS秒");
 
     Schedule.create({
       scheduleId:scheduleId,
       scheduleName:req.body.scheduleName,
       memo:req.body.memo,
       createdBy:req.user.id,
-      updateAt:updateAt
+      updateAt:updateAt,
+      times,times
     }).then(()=>{
       const candidateData = req.body.candidates.trim().split('\n').map((c)=>{return c.trim()}).filter((f)=>{return f !== ""});
       const candidates = candidateData.map((c)=>{
@@ -34,7 +45,21 @@ router.post('/',authensure,(req,res,next)=>{
         }
       });
       Candidate.bulkCreate(candidates).then(()=>{
-        res.redirect('/')
+        const members = `${req.user.username}/${req.user.id}\n${req.body.members.trim()}`;
+        if(!members){
+          console.log('メンバーなし')
+          res.redirect('/');
+        } else {
+          console.log('メンバー取得')
+          Member.create({
+            scheduleId:scheduleId,
+            hostId:req.user.id,
+            updateAt:updateAt,
+            members:members, 
+          }).then(()=>{
+            res.redirect('/')
+          })
+        }
       })
     })
 });
@@ -105,18 +130,35 @@ router.get('/:scheduleId',authensure,(req,res,next)=>{
               const commentMap = new Map();
               commentMap.set(parseInt(req.user.id),'');
               comments.forEach((c)=>{
-                commentMap.set(c.userId,c.comment)
+               commentMap.set(c.userId,c.comment)
                 });
                 console.log(availMapMap.size);
                 console.log('/:scheduleIdのページの表示は完了です')
-                res.render('schedule',{
-                 requser:req.user,
-                 schedule:schedule,
-                 availMapMap:availMapMap,
-                 candidates:candidates,
-                 users:users,
-                 commentMap:commentMap
-                });
+                Member.findOne({
+                  where:{scheduleId:schedule.scheduleId}
+                }).then((m)=>{
+                  const candidateData = m.members.split('\n').map((c)=>{return c.trim()}).filter((f)=>{return f !== ""});
+                  const memberlist = candidateData.join(' , ');
+                  const applicant = `${req.user.username}/${req.user.id}`
+                  const regMember = new RegExp(applicant,'gi');
+                  const member = m.members
+                  const testauth = regMember.test(member);
+                  if(testauth===true){
+                  res.render('schedule',{
+                    requser:req.user,
+                    schedule:schedule,
+                    availMapMap:availMapMap,
+                    candidates:candidates,
+                    users:users,
+                    commentMap:commentMap,
+                    memberlist:memberlist
+                   });
+                  } else {
+                    const err = new Error('スケジュール作成者からアクセスを許可されていません');
+                    err.status = 401;
+                    next(err);
+                  }
+                })
              })
            })
          })
@@ -134,10 +176,17 @@ router.get('/:scheduleId/edit',authensure,(req,res,next)=>{
         where:{scheduleId:req.params.scheduleId},
         order:[['"candidateId"','ASC']]
       }).then((candidates)=>{
-         res.render('edit',{
-           schedule:schedule,
-           candidates:candidates
-         })
+        Member.findOne({
+          where:{scheduleId:req.params.scheduleId}
+        }).then((member)=>{
+          console.log(member);
+          const members = member.members.split('\n').map((m)=>{return m.trim()}).filter((f)=>{return f !== ""});
+          res.render('edit',{
+            schedule:schedule,
+            candidates:candidates,
+            members:members
+          })
+        })
       })
     } else {
       const err = new Error('指定された予定がない、または、予定する権限がありません');
@@ -158,12 +207,14 @@ router.post('/:scheduleId',authensure,(req,res,next)=>{
       if(isMine(req,schedule)){
         if(parseInt(req.query.edit) === 1){
           const updateAt = new Date();
+          const times = schedule.times
           Schedule.upsert({
             scheduleId:schedule.scheduleId,
             scheduleName:req.body.scheduleName,
             memo:req.body.memo,
             createdBy:req.user.id,
-            updateAt:updateAt
+            updateAt:updateAt,
+            times:times
           }).then(()=>{
             const candidateData = req.body.candidates.trim().split('\n').map((c)=>{return c.trim()}).filter((f)=>{return f !== ""});
             const candidates = candidateData.map((c)=>{
@@ -173,7 +224,20 @@ router.post('/:scheduleId',authensure,(req,res,next)=>{
               }
             });
             Candidate.bulkCreate(candidates).then(()=>{
-              res.redirect(`/schedules/${schedule.scheduleId}`);
+              Member.findOne({
+                where:{scheduleId:schedule.scheduleId}
+              }).then((m)=>{
+                console.log(m.members);
+                const newmember = m.members + '\n' +req.body.newmembers;
+                Member.upsert({
+                  scheduleId:schedule.scheduleId,
+                  hostId:req.user.id,
+                  updateAt:updateAt,
+                  members:newmember
+                }).then(()=>{
+                  res.redirect(`/schedules/${schedule.scheduleId}`);
+                })
+              })
             })
           })
         } else if(parseInt(req.query.delete) === 1){

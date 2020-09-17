@@ -1,17 +1,43 @@
 extends layout
 
 block content
-  h1= title
-  if user 
-    p 現在 #{user.username}/#{user.id} でログイン中
-    a(href='/logout') ログアウト
-    div
+  h1.ly_maintitle.ly_maintitle__toppage OUR-SCHEDULES
+  if user
+   div.ly_maincontent.bl_maincontent
+    div.bl_userInfo
+      span.bl_userInfo_info 現在 #{user.username}/#{user.id} でログイン中
+      br
+      span.bl_userInfo_logout
+       a(href='/logout') ログアウト
+    div.bl_createSchedule
      a(href='schedules/new') 新しく予定を作成する
-    h3 作成したスケジュール一覧
-      ul
+    div.bl_schedulesIndex.bl_maincontent_items
+     h3.bl_maincontent_items_subtitle 各スケジュールのページへ　(コードを入力してください)
+     p.bl_schedulesIndex_note 注意 : スケジュールのメンバーのみ利用可能です
+     form(action="/enters" method="post")
+       input(type="text" name="identer" size='70' value="").el_textform
+       button(type="submit").el_button.el_button__index 検索
+    div.bl_shcedulesList.bl_maincontent_items
+     h3.bl_maincontent_items_subtitle 作成したスケジュール一覧
+     ul.bl_shcedulesList_list
         each schedule in schedules
-          li
-            a(href=`/schedules/${schedule.scheduleId}`) #{schedule.scheduleName}  /  #{schedule.updateAt}
-  else 
-    p Welcome to #{title}
-    a(href='/auth/github') ログイン
+          li.bl_shcedulesList_list_item
+            a(href=`/schedules/${schedule.scheduleId}`) #{schedule.scheduleName}  /  #{schedule.times}
+    div.bl_createIdMemo.bl_maincontent_items
+     h3.bl_maincontent_items_subtitle スケジュールIDメモ作成
+     form(action="/topmemo" method="post")
+       input(type="text", name="topmemo" size="70").el_textform
+       button(type="submit").el_button.el_button__index 作成
+    div.bl_idMemoList.bl_maincontent_items
+     h3.bl_maincontent_items_subtitle スケジュールIDメモ一覧
+     ul
+       each memo in memos
+        li.bl_idMemoList_list #{memo.memo}
+        form(action=`/topmemo/delete/${memo.id}` method="post").bl_idMemoList_del
+          button(type="submit").el_button.bl_idMemoList_del_button 削除
+  else
+    div.bl_loginPage
+      p.bl_loginPage_title Welcome to #{title} 💫
+      a.bl_loginPage_link(href='/auth/github') GitHubでログイン
+      span 🌎　
+      span.bl_loginPage_memo ※ 初めての方はリンク先でGitHubアカウントを作成してください ✨
