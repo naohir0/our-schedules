@@ -15,8 +15,8 @@ var Candidate = require('./models/candidate');
 var Comment = require('./models/comment');
 var Member = require('./models/member');
 
-var GITHUB_CLIENT_ID = 'f8c95ebbc6b6fa61a013';
-var GITHUB_CLIENT_SECRET = '8bd794919dcdcdd24775b01c97ab5e85b1fb1b3e';
+var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID || 'f8c95ebbc6b6fa61a013';
+var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET || '8bd794919dcdcdd24775b01c97ab5e85b1fb1b3e';
 
 passport.serializeUser(function (user,done){
     done(null,user)
@@ -28,7 +28,7 @@ passport.deserializeUser(function (obj,done){
 passport.use(new GitHubStrategy({
   clientID:GITHUB_CLIENT_ID,
   clientSecret:GITHUB_CLIENT_SECRET,
-  callbackURL:'http://localhost:8000/auth/github/callback'
+  callbackURL:process.env.HEROKU_URL ? process.env.HEROKU_URL : 'http://localhost:8000/auth/github/callback'
 },function (accessToken,refreshToken,profile,done){
    process.nextTick(function (){
      User.upsert({

@@ -9,9 +9,11 @@ const Candidate = require('../models/candidate');
 const Availability = require('../models/availability');
 const Comment = require('../models/comment');
 const Member = require('../models/member');
+const csrf = require('csurf');
+const csrfProtection = csrf({cookie:true});
 require('date-utils');
 
-router.get('/new',authensure,(req,res,next)=>{
+router.get('/new',authensure,csrfProtection,(req,res,next)=>{
     User.findAll({
       order:[
         ['username','ASC']
@@ -19,12 +21,13 @@ router.get('/new',authensure,(req,res,next)=>{
     }).then((users)=>{
       res.render('new',{
         user:req.user,
-        users:users
+        users:users,
+        csrfToken:req.csrfToken()
       })
     })
 });
 
-router.post('/',authensure,(req,res,next)=>{
+router.post('/',authensure,csrfProtection,(req,res,next)=>{
     const scheduleId = uuid.v4();
     const updateAt = new Date();
     const times = updateAt.toFormat("YYYY年MM月DD日 HH24時MI分SS秒");
@@ -166,7 +169,7 @@ router.get('/:scheduleId',authensure,(req,res,next)=>{
      })
 });
 
-router.get('/:scheduleId/edit',authensure,(req,res,next)=>{
+router.get('/:scheduleId/edit',authensure,csrfProtection,(req,res,next)=>{
   
   Schedule.findOne({
     where:{scheduleId:req.params.scheduleId}
@@ -184,7 +187,8 @@ router.get('/:scheduleId/edit',authensure,(req,res,next)=>{
           res.render('edit',{
             schedule:schedule,
             candidates:candidates,
-            members:members
+            members:members,
+            csrfToken:req.csrfToken()
           })
         })
       })
@@ -200,7 +204,7 @@ function isMine(req,schedule){
    return schedule && parseInt(req.user.id) === schedule.createdBy
 }
 
-router.post('/:scheduleId',authensure,(req,res,next)=>{
+router.post('/:scheduleId',authensure,csrfProtection,(req,res,next)=>{
     Schedule.findOne({
       where:{scheduleId:req.params.scheduleId}
     }).then((schedule)=>{

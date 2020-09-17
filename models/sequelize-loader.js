@@ -1,7 +1,7 @@
 'use strict';
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(
-  'postgres://postgres:postgres@localhost/our_schedules',
+  process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost/our_schedules',
   {
     operatorsAliases: false
   });
