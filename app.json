@@ -1,0 +1,7 @@
+{
+  "name": "our-schedules",
+  "description": "Our-Schedules",
+  "logo": "",
+  "keywords": ["node"],
+  "image": "heroku/nodejs"
+}
